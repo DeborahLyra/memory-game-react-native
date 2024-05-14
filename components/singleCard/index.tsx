@@ -10,14 +10,18 @@ interface SingleCardProps {
     matched: boolean
   },
   handleChoice: (card: { src: any, id: number, matched: boolean }) => void,
-  flipped: boolean
+  flipped: boolean,
+  isWaiting: boolean
 }
 
-export function SingleCard({ card, handleChoice, flipped }: SingleCardProps) {
+export function SingleCard({ card, handleChoice, flipped, isWaiting }: SingleCardProps) {
 
   const handlePress = () => {
-    handleChoice(card)
+    if (!isWaiting) {
+      handleChoice(card);
+    }
   }
+
   return (
     <View style={styles.imageWrapper}>
       <View style={styles.card}>

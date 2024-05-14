@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity, ScrollView  } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { styles } from "./styles";
 import { useEffect, useState } from "react";
 import { SingleCard } from "@/components/singleCard";
@@ -23,7 +23,7 @@ export default function Index() {
   interface CardsType {
     src: string,
     id: number,
-    match: boolean
+    matched: boolean
   }
 
   const [cards, setCards] = useState<CardsType[]>([]);
@@ -34,7 +34,7 @@ export default function Index() {
   const shuffleCards = () => {
     const shuffledCards = [...cardsImages, ...cardsImages]
       .sort(() => Math.random() - 0.5)
-      .map((card, index) => ({ ...card, id: index + 1, match: false }));
+      .map((card, index) => ({ ...card, id: index + 1, matched: false }));
 
     setCards(shuffledCards);
   };
@@ -43,12 +43,36 @@ export default function Index() {
     shuffleCards()
   }, [])
 
-  const handleChoice = (card:CardsType)  => {
+  const reset = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+  }
+
+  const handleChoice = (card: CardsType) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   }
 
+  const handleMatched = () => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        setCards(prevCards =>
+          prevCards.map(card =>
+            card.src === choiceOne.src ? { ...card, matched: true } : card
+          )
+        );
+        reset();
+      } else {
+        setTimeout(() => reset(), 1000);
+      }
+    }
+  }
+
+  useEffect(() => {
+    handleMatched()
+  }, [choiceOne, choiceTwo])
+
   return (
-    <ScrollView  style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.containerHeader}>
         <Text style={styles.title}>The Memory Game!</Text>
         <TouchableOpacity style={styles.newGameButton} onPress={shuffleCards}>
@@ -56,11 +80,17 @@ export default function Index() {
         </TouchableOpacity>
       </View>
       <View>
-        <View  style={styles.imageContainer}>
+        <View style={styles.imageContainer}>
           {
             cards.map(card => {
               return (
-                <SingleCard card={card} key={card.id} handleChoice ={handleChoice}/>
+                <SingleCard
+                  card={card}
+                  key={card.id}
+                  handleChoice={handleChoice}
+                  flipped={card === choiceOne || card === choiceTwo || card.matched}
+                />
+
               )
             })
           }

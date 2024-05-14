@@ -7,23 +7,28 @@ interface SingleCardProps {
   card: {
     src: any,
     id: number,
-    match: boolean
+    matched: boolean
   },
-  handleChoice: (card: { src: any, id: number, match: boolean }) => void
+  handleChoice: (card: { src: any, id: number, matched: boolean }) => void,
+  flipped: boolean
 }
 
-export function SingleCard({ card, handleChoice }: SingleCardProps) {
+export function SingleCard({ card, handleChoice, flipped }: SingleCardProps) {
 
   const handlePress = () => {
     handleChoice(card)
   }
   return (
     <View style={styles.imageWrapper}>
-      <Image key={card.id} source={card.src} style={styles.front} />
-      <TouchableOpacity onPress={handlePress}>
-        <Image source={require('../../assets/images/back-cover.jpg')} style={styles.back} />
-      </TouchableOpacity>
-
+      <View style={styles.card}>
+        {flipped || card.matched ? (
+          <Image source={card.src} style={styles.front} />
+        ) : (
+          <TouchableOpacity onPress={handlePress}>
+            <Image source={require('../../assets/images/back-cover.jpg')} style={styles.back} />
+          </TouchableOpacity>
+        )}
+      </View>
     </View>
   )
 }

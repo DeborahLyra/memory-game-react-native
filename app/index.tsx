@@ -27,8 +27,8 @@ export default function Index() {
   }
 
   const [cards, setCards] = useState<CardsType[]>([]);
-  const [choiceOne, setChoiceOne] = useState<CardsType | null>(null);
-  const [choiceTwo, setChoiceTwo] = useState<CardsType | null>(null);
+  const [fristRevealedCard, setFristRevealedCard] = useState<CardsType | null>(null);
+  const [lastRevealedCard, setLastRevealedCard] = useState<CardsType | null>(null);
   const [isWaiting, setIsWaiting] = useState(false);
 
   const shuffleCards = () => {
@@ -45,34 +45,34 @@ export default function Index() {
   }, [])
 
   const reset = () => {
-    setChoiceOne(null)
-    setChoiceTwo(null)
+    setFristRevealedCard(null)
+    setLastRevealedCard(null)
     setIsWaiting(false);
   }
 
   const handleChoice = (card: CardsType) => {
-    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+    fristRevealedCard ? setLastRevealedCard(card) :setFristRevealedCard(card);
   }
 
   const handleMatched = () => {
-    if (choiceOne && choiceTwo) {
+    if (fristRevealedCard && lastRevealedCard) {
       setIsWaiting(true);
-      if (choiceOne.src === choiceTwo.src) {
+      if (fristRevealedCard.src === lastRevealedCard.src) {
         setCards(prevCards =>
           prevCards.map(card =>
-            card.src === choiceOne.src ? { ...card, matched: true } : card
+            card.src === fristRevealedCard.src ? { ...card, matched: true } : card
           )
         );
         reset();
       } else {
-        setTimeout(() => reset(), 1000);
+        setTimeout(() => reset(), 2000);
       }
     }
   }
 
   useEffect(() => {
     handleMatched();
-  }, [choiceOne, choiceTwo])
+  }, [fristRevealedCard, lastRevealedCard])
 
   useEffect(() => {
     const allMatched = cards.every(card => card.matched);
@@ -111,7 +111,7 @@ export default function Index() {
               key={card.id}
               card={card}
               handleChoice={handleChoice}
-              flipped={choiceOne === card || choiceTwo === card || card.matched}
+              flipped={fristRevealedCard === card || lastRevealedCard === card || card.matched}
               isWaiting={isWaiting}
             />
           ))}

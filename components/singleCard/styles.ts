@@ -7,7 +7,13 @@ export const styles = StyleSheet.create({
         width: '50%', 
         padding: 5, 
     },
-    image: {
+    front: {
+        width: '100%', 
+        height: 140, 
+        borderRadius: 5,
+    },
+
+    back:{
         width: '100%', 
         height: 140, 
         borderRadius: 5,

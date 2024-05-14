@@ -27,6 +27,9 @@ export default function Index() {
   }
 
   const [cards, setCards] = useState<CardsType[]>([]);
+  const [choiceOne, setChoiceOne] = useState<CardsType | null>(null);
+  const [choiceTwo, setChoiceTwo] = useState<CardsType | null>(null);
+
 
   const shuffleCards = () => {
     const shuffledCards = [...cardsImages, ...cardsImages]
@@ -40,6 +43,10 @@ export default function Index() {
     shuffleCards()
   }, [])
 
+  const handleChoice = (card:CardsType)  => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
+  }
+
   return (
     <ScrollView  style={styles.container}>
       <View style={styles.containerHeader}>
@@ -49,22 +56,11 @@ export default function Index() {
         </TouchableOpacity>
       </View>
       <View>
-        {/* {
-          cards.map(img => {
-            console.log(img)
-            return (
-              <>
-              <Text>teste</Text>
-              <Image source={img.src}/>
-              </>
-            )
-          })
-        } */}
         <View  style={styles.imageContainer}>
           {
             cards.map(card => {
               return (
-                <SingleCard card={card} key={card.id} />
+                <SingleCard card={card} key={card.id} handleChoice ={handleChoice}/>
               )
             })
           }

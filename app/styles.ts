@@ -3,13 +3,14 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
 
     containerHeader: {
-        paddingTop: 40,
+        paddingTop: 70,
         alignItems: 'center',
-        height: '100%'
     },
 
     container:{
         backgroundColor: '#606470',
+        height: '100%',
+        padding: 20
     }, 
     title: {
         color: '#f7f7f7',
@@ -25,6 +26,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 18,
+        marginBottom: 18,
     },
 
     newGameText:{
@@ -33,4 +35,9 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         
     },
+
+    imageContainer:{
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    }
 })

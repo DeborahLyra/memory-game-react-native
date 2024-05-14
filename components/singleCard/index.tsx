@@ -1,10 +1,20 @@
-import { View } from 'react-native-reanimated/lib/typescript/Animated'
-import { styles } from './styles'
+import { styles } from "./styles";
+import { Text, View, Image, StyleSheet } from "react-native";
 
-export function SingleCard() {
-  return (
-    <View>
+
+interface SingleCardProps {
+    card: {
+        src: any,
+        id: number,
+        match: boolean
+    }
+}
+
+export function SingleCard({ card }: SingleCardProps) {
+    return (
       
-    </View>
-  )
+        <View style={styles.imageWrapper}>
+            <Image key={card.id} source={card.src} style={styles.image}/>
+        </View>
+    )
 }

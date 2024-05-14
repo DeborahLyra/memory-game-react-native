@@ -18,7 +18,6 @@ const cardsImages = [
   }
 ];
 
-
 export default function Index() {
 
   interface CardsType {
@@ -41,12 +40,8 @@ export default function Index() {
     shuffleCards()
   }, [])
 
-  //console.log(cards)
-
   return (
     <ScrollView  style={styles.container}>
-
-
       <View style={styles.containerHeader}>
         <Text style={styles.title}>The Memory Game!</Text>
         <TouchableOpacity style={styles.newGameButton} onPress={shuffleCards}>

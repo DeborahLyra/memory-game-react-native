@@ -8,18 +8,18 @@ export const styles = StyleSheet.create({
     },
 
     container:{
-        backgroundColor: '#606470',
+        backgroundColor: '#05004e',
         height: '100%',
         padding: 20
     }, 
     title: {
-        color: '#f7f7f7',
+        color: '#ffcccc',
         fontSize: 30,
         fontWeight: 'bold',
         
     },
     newGameButton:{
-        backgroundColor:'#93deff',
+        backgroundColor:'#fb7777',
         borderRadius: 5,
         height: 40,
         width: 150,
@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
     },
 
     newGameText:{
-        color: '#323643',
+        color: '#ffcccc',
         fontSize: 18,
         fontWeight: 'bold',
         

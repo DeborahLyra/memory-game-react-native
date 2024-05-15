@@ -5,20 +5,24 @@ import { SingleCard } from "@/components/singleCard";
 
 const cardsImages = [
   {
-    src: require('../assets/images/lilo-and-stitch.jpg')
+    src: require('../assets/images/lilo-and-stitch.jpg'),
+    matched: false 
   },
   {
-    src: require('../assets/images/mushu.jpg')
+    src: require('../assets/images/mushu.jpg'),
+    matched: false 
   },
   {
-    src: require('../assets/images/the-lady-and-the-tramp.jpg')
+    src: require('../assets/images/the-lady-and-the-tramp.jpg'),
+    matched: false 
   },
   {
-    src: require('../assets/images/the-lion-king.jpg')
+    src: require('../assets/images/the-lion-king.jpg'),
+    matched: false 
   }
 ];
 
-export default function Index() {
+export default function App() {
 
   interface CardsType {
     src: string,
@@ -30,13 +34,15 @@ export default function Index() {
   const [fristRevealedCard, setFristRevealedCard] = useState<CardsType | null>(null);
   const [lastRevealedCard, setLastRevealedCard] = useState<CardsType | null>(null);
   const [isWaiting, setIsWaiting] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false); 
 
   const shuffleCards = () => {
     const shuffledCards = [...cardsImages, ...cardsImages]
       .sort(() => Math.random() - 0.5)
-      .map((card, index) => ({ ...card, id: index + 1, matched: false }));
+      .map((card, index) => ({ ...card, id: index + 1}));
 
     setCards(shuffledCards);
+    setGameStarted(true)
     reset()
   };
 
@@ -76,7 +82,7 @@ export default function Index() {
 
   useEffect(() => {
     const allMatched = cards.every(card => card.matched);
-    if (allMatched) {
+    if (allMatched && gameStarted) {
       Alert.alert(
         "You Won!",
         "Do you want to play again?",
